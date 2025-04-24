@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web AR Example - MindAR</title>
+    <title>Web AR Click to Change Color</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/aframe/dist/aframe-mindar.js"></script>
-    <style>
-      body { margin: 0; overflow: hidden; }
-      canvas { position: fixed; top: 0; left: 0; }
-    </style>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
   </head>
   <body>
-    <!-- 建立 AR 場景，改用 MindAR 圖像辨識 -->
-    <a-scene mindar-image="imageTargetSrc: target.mind;" 
-             embedded 
-             color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights"
-             vr-mode-ui="enabled: false" 
-             device-orientation-permission-ui="enabled: true">
-             
-      <a-assets>
-        <img id="marker-image" src="target.jpg" />
-      </a-assets>
+    <a-scene embedded arjs="sourceType: webcam;">
+      
+      <a-marker preset="hiro">
+        <!-- 可點擊變色的方塊 -->
+        <a-box id="colorBox"
+               position="0 0.5 0"
+               rotation="0 45 0"
+               color="#4CC3D9"></a-box>
 
-      <!-- 使用自訂圖像標記來辨識 -->
-      <a-entity mindar-image-target="targetIndex: 0">
-        <!-- 在標記上顯示一個旋轉的立方體 -->
-        <a-box position="0 0.5 0" rotation="0 45 0" color="#8b4513"></a-box>
-      </a-entity>
+        <!-- 簡單光源 -->
+        <a-light type="ambient" intensity="1"></a-light>
+      </a-marker>
 
-      <!-- 鏡頭元件，MindAR 會自動處理 -->
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-entity camera></a-entity>
+
+      <!-- 點擊互動腳本 -->
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const box = document.querySelector('#colorBox');
+          let isRed = false;
+          box.addEventListener('click', () => {
+            isRed = !isRed;
+            box.setAttribute('color', isRed ? '#FF0000' : '#4CC3D9');
+          });
+        });
+      </script>
     </a-scene>
   </body>
 </html>
