@@ -26,14 +26,15 @@
   </head>
   <body>
     <a-scene 
-      mindar-image="imageTargetSrc: targets.mind; autoStart: true;" 
+      mindar-image="imageTargetSrc: targets.mind; autoStart: true; showStats: false; uiLoading: no; uiScanning: no; uiError: no;" 
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
     >
       <a-assets>
-        <img id="card" src="card.png" />
+        <!-- 不再需要 card.png，所以這行也可以刪除 -->
+        <!-- <img id="card" src="card.png" /> -->
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -42,12 +43,13 @@
         mindar-image-target="targetIndex: 0"
         id="target"
       >
-        <a-plane src="#card" position="0 0 0" width="1" height="0.75"></a-plane>
+        <!-- 不再顯示圖片 plane -->
 
+        <!-- 只顯示這段文字 -->
         <a-entity 
           id="infoText"
           visible="false"
-          position="0 0.6 0" 
+          position="0 0 0" 
           text="value: 卡皮巴拉其實就是水豚（Capybara）哦;
                 align: center;
                 width: 2;
