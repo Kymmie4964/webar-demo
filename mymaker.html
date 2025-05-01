@@ -14,19 +14,25 @@
         height: 100%;
         overflow: hidden;
       }
-
       a-scene {
         width: 100%;
         height: 100%;
         position: fixed;
-        top: 0;
-        left: 0;
+        top: 0; left: 0;
       }
     </style>
   </head>
   <body>
     <a-scene
-      mindar-image="imageTargetSrc: targets.mind; autoStart: true; showStats: false; uiScanning: no; uiError: no; uiLoading: no;"
+      mindar-image="
+        imageTargetSrc: targets.mind;
+        autoStart: true;
+        showStats: false;
+        uiLoading: no;
+        uiScanning: no;
+        uiError: no;
+        uiTarget: no;
+      "
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
@@ -35,17 +41,13 @@
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0" id="target">
-
         <!-- 底色背景板 -->
         <a-plane
           id="text-bg"
           visible="false"
           position="0 0.6 0"
-          width="2.4"
-          height="0.5"
-          color="black"
-          opacity="0.6"
-          material="shader: flat"
+          width="2.4" height="0.5"
+          color="black" opacity="0.6" material="shader: flat"
         ></a-plane>
 
         <!-- 自訂文字 -->
@@ -64,19 +66,19 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const target = document.querySelector("#target");
-        const text = document.querySelector("#infoText");
-        const bg = document.querySelector("#text-bg");
+        const text   = document.querySelector("#infoText");
+        const bg     = document.querySelector("#text-bg");
 
         target.addEventListener("targetFound", () => {
           console.log("✅ 找到卡皮巴拉！");
-          text.setAttribute("visible", "true");
           bg.setAttribute("visible", "true");
+          text.setAttribute("visible", "true");
         });
 
         target.addEventListener("targetLost", () => {
           console.log("❌ 卡皮巴拉消失了");
-          text.setAttribute("visible", "false");
           bg.setAttribute("visible", "false");
+          text.setAttribute("visible", "false");
         });
       });
     </script>
