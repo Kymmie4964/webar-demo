@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>MindAR 點擊縮放範例</title>
+    <meta charset="utf-8" />
+    <title>MindAR 點擊縮放（手機適用）</title>
+    <!-- A-Frame & MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <!-- event-set component（綁定屬性變化用）-->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
   </head>
   <body>
     <a-scene
@@ -18,25 +21,30 @@
         <img id="card" src="card1.jpg" />
       </a-assets>
 
-      <!-- 加上環境光讓圖片不會全黑 -->
+      <!-- 環境光 -->
       <a-light type="ambient" intensity="1"></a-light>
 
-      <!-- 相機與游標 -->
+      <!-- 相機 + 游標，rayOrigin: mouse 同時支援滑鼠 & 觸控 -->
       <a-camera look-controls="enabled: false">
-        <a-cursor fuse="true" fuse-timeout="500" rayOrigin="mouse"></a-cursor>
+        <a-entity
+          cursor="fuse: false; rayOrigin: mouse"
+          raycaster="objects: .clickable"
+        ></a-entity>
       </a-camera>
 
-      <!-- 掃描後顯示圖片，點擊後放大 -->
+      <!-- 掃描到後顯示，class="clickable" 才能被 raycaster 偵測 -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane 
+        <a-plane
           id="scalePlane"
+          class="clickable"
           src="#card"
           width="1"
           height="0.6"
           scale="1 1 1"
           material="shader: flat"
-          event-set__click="scale: 1.3 1.3 1.3">
-        </a-plane>
+          event-set__click="scale: 1.3 1.3 1.3"
+          event-set__mouseleave="scale: 1 1 1"
+        ></a-plane>
       </a-entity>
     </a-scene>
   </body>
