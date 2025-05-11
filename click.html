@@ -42,10 +42,13 @@
         init: function () {
           const el = this.el;
           this.baseScale = el.object3D.scale.x;
+    
           el.addEventListener('pinchstarted', () => {
             this.startScale = this.baseScale;
           });
+    
           el.addEventListener('pinchmoved', (evt) => {
+            console.log('🔍 Pinch moved, scale =', evt.detail.scale); // 👈 這行是你要加的
             const newScale = this.startScale * evt.detail.scale;
             el.object3D.scale.set(newScale, newScale, newScale);
             this.baseScale = newScale;
@@ -53,5 +56,6 @@
         }
       });
     </script>
+
   </body>
 </html>
