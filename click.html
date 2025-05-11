@@ -9,31 +9,33 @@
   <body>
     <a-scene
       mindar-image="imageTargetSrc: targets.mind; autoStart: true;"
-      
+      embedded
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights: true"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
     >
-      <!-- 載入要顯示的圖片 -->
       <a-assets>
         <img id="card" src="card.png" />
       </a-assets>
 
-      <a-camera look-controls="enabled: false"></a-camera>
+      <!-- 加上環境光讓圖片不會全黑 -->
+      <a-light type="ambient" intensity="1"></a-light>
 
-      <!-- 掃描到目標時顯示這個 plane -->
+      <!-- 相機與游標 -->
+      <a-camera look-controls="enabled: false">
+        <a-cursor fuse="true" fuse-timeout="500" rayOrigin="mouse"></a-cursor>
+      </a-camera>
+
+      <!-- 掃描後顯示圖片，點擊後放大 -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <!-- 初始 scale="1 1 1"，上面貼 card.png -->
-        <!-- 使用 event-set 組件，在 click 時將 scale 設為 1.3 -->
-        <a-plane> 
+        <a-plane 
           id="scalePlane"
           src="#card"
           width="1"
           height="0.6"
           scale="1 1 1"
           material="shader: flat"
-          
           event-set__click="scale: 1.3 1.3 1.3">
         </a-plane>
       </a-entity>
