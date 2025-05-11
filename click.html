@@ -36,8 +36,7 @@
           width="1.2"
           height="0.7"
           position="0 0 0"
-          touch-transform
-          click-color="colors: #ffffff, #ff0000, #00ff00, #0000ff">
+          touch-transform>
         </a-plane>
       </a-entity>
     </a-scene>
@@ -106,30 +105,6 @@
               this.prevDistance = null;
               this.prevAngle = null;
             }
-          });
-        }
-      });
-    </script>
-
-    <!-- 點擊/觸控換顏色元件 -->
-    <script>
-      AFRAME.registerComponent('click-color', {
-        schema: {
-          colors: { type: 'array', default: ['#ffffff', '#ff0000', '#00ff00', '#0000ff'] }
-        },
-        init: function () {
-          this.idx = 0;
-          const el = this.el;
-
-          const applyColor = () => {
-            this.idx = (this.idx + 1) % this.data.colors.length;
-            el.setAttribute('material', 'color', this.data.colors[this.idx]);
-          };
-
-          el.addEventListener('click', applyColor);
-          el.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            applyColor();
           });
         }
       });
